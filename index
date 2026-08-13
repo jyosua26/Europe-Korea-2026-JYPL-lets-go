@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="J·P·T Journey">
+<meta name="theme-color" content="#2A2E2B">
+<title>Jonathan, Priscilla &amp; Theodore — Europe &amp; Korea</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%232A2E2B'/%3E%3Ctext x='90' y='103' font-family='Georgia,serif' font-size='58' fill='%23B2925E' text-anchor='middle'%3EJPT%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%232A2E2B'/%3E%3Ctext x='90' y='103' font-family='Georgia,serif' font-size='58' fill='%23B2925E' text-anchor='middle'%3EJPT%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --stone:#EAE2D3;
+    --paper:#F8F4EC;
+    --paper-2:#F1EADB;
+    --ink:#201E17;
+    --ink-soft:#6B6558;
+    --ink-faint:#9C9585;
+    --brass:#A8875A;
+    --brass-deep:#7E6339;
+    --brass-pale:#D9C6A2;
+    --line:rgba(32,30,23,0.14);
+    --line-soft:rgba(32,30,23,0.08);
+    --deep:#2A2E2B;
+    --deep-2:#343935;
+    --cream-on-deep:#EFE7D6;
+    --radius:2px;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-top: env(safe-area-inset-top, 0px);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--stone);
+    color:var(--ink);
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    -webkit-font-smoothing:antialiased;
+    overscroll-behavior-y:none;
+  }
+  ::selection{background:var(--brass-pale);}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:400;}
+  .eyebrow{
+    font-family:'Jost',sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    font-weight:500;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- App shell ---------- */
+  #app{
+    max-width:560px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--stone);
+    position:relative;
+    padding-bottom:calc(78px + var(--safe-bottom));
+  }
+
+  /* ---------- Header ---------- */
+  header.top{
+    position:sticky;
+    top:0;
+    z-index:40;
+    background:var(--deep);
+    color:var(--cream-on-deep);
+    padding-top:var(--safe-top);
+  }
+  .top-inner{
+    padding:22px 22px 16px;
+    text-align:center;
+    position:relative;
+  }
+  .monogram{
+    font-family:'Cormorant Garamond',serif;
+    font-size:13px;
+    letter-spacing:0.42em;
+    color:var(--brass);
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .trip-title{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:400;
+    font-size:26px;
+    line-height:1.15;
+    letter-spacing:0.01em;
+    margin:0 0 6px;
+  }
+  .trip-title em{font-style:italic;color:var(--brass-pale);}
+  .trip-dates{
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:rgba(239,231,214,0.55);
+    font-weight:400;
+  }
+  .hairline{
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(178,146,94,0.55), transparent);
+    margin:16px auto 0;
+    width:64px;
+  }
+
+  /* ---------- Sticky itinerary sub-header (legs + hero) ---------- */
+  .itin-sticky{
+    position:sticky;
+    top:var(--header-h, 0px);
+    z-index:35;
+    background:var(--deep);
+  }
+
+  /* leg chip nav */
+  nav.legs{
+    display:flex;
+    gap:0;
+    overflow-x:auto;
+    padding:14px 12px;
+    scrollbar-width:none;
+    background:var(--deep);
+  }
+  nav.legs::-webkit-scrollbar{display:none;}
+  nav.legs a{
+    flex:0 0 auto;
+    padding:7px 14px;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:rgba(239,231,214,0.5);
+    border:1px solid rgba(239,231,214,0.16);
+    border-radius:20px;
+    margin-right:8px;
+    white-space:nowrap;
+    transition:all .25s ease;
+    font-family:'Jost',sans-serif;
+  }
+  nav.legs a.active{
+    color:var(--deep);
+    background:var(--brass);
+    border-color:var(--brass);
+  }
+
+  /* city hero band */
+  .city-hero{
+    position:relative;
+    height:196px;
+    overflow:hidden;
+    background:var(--deep-2);
+  }
+  .city-hero .hero-img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity 1.1s ease;
+    filter:saturate(0.86) contrast(1.03);
+  }
+  .city-hero .hero-img.on{opacity:1;}
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(22,21,15,0.15) 0%, rgba(22,21,15,0.05) 35%, rgba(22,21,15,0.75) 100%),
+      linear-gradient(90deg, rgba(22,21,15,0.35) 0%, transparent 45%);
+  }
+  .hero-text{
+    position:absolute;
+    left:20px;
+    right:20px;
+    bottom:16px;
+    color:var(--cream-on-deep);
+  }
+  .hero-eyebrow{
+    font-size:10px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--brass-pale);
+    margin-bottom:4px;
+    opacity:0.9;
+  }
+  .hero-city{
+    font-family:'Cormorant Garamond',serif;
+    font-size:34px;
+    line-height:1;
+    text-shadow:0 2px 18px rgba(0,0,0,0.35);
+  }
+
+  /* ---------- Screens ---------- */
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  /* ---------- Section divider ---------- */
+  .section-divider{
+    padding:38px 26px 20px;
+    text-align:center;
+    position:relative;
+  }
+  .section-divider .flag{font-size:22px;display:block;margin-bottom:10px;letter-spacing:.3em;}
+  .section-divider h2{
+    font-size:29px;
+    margin:0 0 6px;
+    letter-spacing:0.01em;
+  }
+  .section-divider .sub{
+    font-size:11px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .section-divider .rule{
+    width:34px;height:1px;background:var(--brass);
+    margin:14px auto 0;
+  }
+
+  /* ---------- Day card ---------- */
+  .day{
+    margin:0 16px 16px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .day-head{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:20px 20px 16px;
+  }
+  .day-num{
+    font-family:'Cormorant Garamond',serif;
+    font-size:34px;
+    color:var(--brass);
+    line-height:1;
+    font-weight:400;
+    min-width:44px;
+  }
+  .day-head-text{flex:1;min-width:0;}
+  .day-date{
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:5px;
+  }
+  .day-dest{
+    font-family:'Cormorant Garamond',serif;
+    font-size:22px;
+    line-height:1.2;
+  }
+
+  .flight-strip{
+    margin:0 20px 16px;
+    padding:11px 14px;
+    background:var(--deep);
+    color:var(--cream-on-deep);
+    border-radius:var(--radius);
+    font-size:12.5px;
+    line-height:1.55;
+    white-space:pre-line;
+    font-weight:300;
+  }
+  .flight-strip .lbl{color:var(--brass);letter-spacing:.14em;font-size:9.5px;text-transform:uppercase;display:block;margin-bottom:5px;}
+
+  .block{padding:0 20px 16px;}
+  .block-label{
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    font-weight:500;
+    margin-bottom:9px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .block-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  ul.plan{list-style:none;margin:0;padding:0;}
+  ul.plan li{
+    position:relative;
+    padding-left:16px;
+    margin-bottom:9px;
+    font-size:14.5px;
+    line-height:1.5;
+    color:var(--ink);
+  }
+  ul.plan li:last-child{margin-bottom:0;}
+  ul.plan li::before{
+    content:'';
+    position:absolute;
+    left:0;top:8px;
+    width:4px;height:4px;
+    background:var(--brass);
+    border-radius:50%;
+  }
+  .rating{
+    display:inline-block;
+    margin-left:6px;
+    font-size:11.5px;
+    color:var(--brass-deep);
+    font-family:'Jost',sans-serif;
+    white-space:nowrap;
+  }
+  .free-tag{
+    display:inline-block;
+    margin-left:6px;
+    font-size:9px;
+    letter-spacing:.1em;
+    color:var(--brass-deep);
+    border:1px solid var(--brass-pale);
+    border-radius:10px;
+    padding:1px 6px;
+    text-transform:uppercase;
+    vertical-align:middle;
+  }
+
+  .meals{display:flex;gap:12px;padding:0 20px 4px;}
+  .meal{flex:1;min-width:0;}
+  .meal .block-label{margin-bottom:8px;}
+  .meal ul.plan li{font-size:13.5px;}
+
+  details.alt{
+    margin:6px 20px 16px;
+    border-top:1px dashed var(--line);
+    padding-top:12px;
+  }
+  details.alt summary{
+    list-style:none;
+    cursor:pointer;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  details.alt summary::-webkit-details-marker{display:none;}
+  details.alt summary::before{
+    content:'+';
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    color:var(--brass);
+    line-height:1;
+  }
+  details.alt[open] summary::before{content:'–';}
+  details.alt .alt-body{padding-top:12px;}
+  details.alt .alt-body ul.plan li{color:var(--ink-soft);font-size:13px;}
+  details.alt .alt-body ul.plan li::before{background:var(--ink-faint);}
+  details.alt .alt-body .meals{padding:0;margin-top:10px;}
+
+  .day-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:14px 20px;
+    background:var(--paper-2);
+    border-top:1px solid var(--line);
+  }
+  .stay-pill{
+    font-size:12px;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:7px;
+    min-width:0;
+  }
+  .stay-pill .dot{width:5px;height:5px;border-radius:50%;background:var(--brass);flex:0 0 auto;}
+  .stay-pill span.name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+  details.notes{flex:0 0 auto;}
+  details.notes summary{
+    list-style:none;
+    cursor:pointer;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    border:1px solid var(--brass-pale);
+    border-radius:20px;
+    padding:5px 11px;
+    white-space:nowrap;
+  }
+  details.notes summary::-webkit-details-marker{display:none;}
+  .notes-body{
+    padding:14px 20px 4px;
+    font-size:12.5px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    white-space:pre-line;
+    background:var(--paper-2);
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- Flights screen ---------- */
+  .page-title{padding:34px 24px 6px;text-align:center;}
+  .page-title h2{font-size:28px;margin:0 0 8px;}
+  .page-title .rule{width:34px;height:1px;background:var(--brass);margin:12px auto 0;}
+
+  .flight-card{
+    margin:14px 16px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+  }
+  .flight-card .fc-top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:10px;
+  }
+  .fc-route{font-family:'Cormorant Garamond',serif;font-size:19px;}
+  .fc-num{font-size:11px;letter-spacing:.1em;color:var(--brass-deep);text-transform:uppercase;}
+  .fc-meta{
+    display:flex;flex-wrap:wrap;gap:6px 16px;
+    font-size:12px;color:var(--ink-soft);
+    padding-top:10px;margin-top:10px;
+    border-top:1px solid var(--line-soft);
+  }
+  .fc-meta b{color:var(--ink);font-weight:500;}
+  .fc-notes{margin-top:10px;font-size:12px;color:var(--ink-faint);font-style:italic;}
+  .bag-disclaimer{
+    margin:16px 20px 4px;
+    font-size:11.5px;
+    line-height:1.6;
+    color:var(--ink-faint);
+    text-align:center;
+    font-style:italic;
+  }
+  .fc-bags{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid var(--line-soft);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .fc-bag-row{
+    display:flex;
+    gap:8px;
+    font-size:12px;
+    line-height:1.5;
+  }
+  .fc-bag-row .who{
+    flex:0 0 58px;
+    font-size:9.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--brass-deep);
+    padding-top:1px;
+  }
+  .fc-bag-row .what{color:var(--ink-soft);}
+
+  /* ---------- Stays screen ---------- */
+  .stay-card{
+    margin:14px 16px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .stay-card h3{font-size:21px;margin:0 0 4px;line-height:1.2;white-space:pre-line;}
+  .stay-city{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-deep);margin-bottom:12px;}
+  .stay-dates{display:flex;gap:22px;margin-bottom:12px;}
+  .stay-dates div .k{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:3px;}
+  .stay-dates div .v{font-size:13.5px;}
+  .stay-cot{
+    display:inline-block;
+    font-size:11px;
+    padding:4px 10px;
+    border-radius:20px;
+    border:1px solid var(--brass-pale);
+    color:var(--brass-deep);
+    margin-bottom:10px;
+  }
+  .stay-notes{font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- Tips screen ---------- */
+  .tip-section{margin:0 16px 22px;}
+  .tip-section h3{
+    font-size:20px;
+    padding-bottom:10px;
+    margin:0 0 12px;
+    border-bottom:1px solid var(--line);
+  }
+  .tip-item{
+    margin-bottom:14px;
+    padding-left:16px;
+    border-left:2px solid var(--brass-pale);
+  }
+  .tip-item .t{font-size:13.5px;font-weight:500;color:var(--ink);margin-bottom:3px;}
+  .tip-item .b{font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+  footer.note{
+    text-align:center;
+    padding:30px 24px 10px;
+    font-size:11px;
+    letter-spacing:.08em;
+    color:var(--ink-faint);
+    line-height:1.7;
+  }
+
+  /* ---------- Bottom nav ---------- */
+  nav.bottom{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:50;
+    max-width:560px;
+    margin:0 auto;
+    background:var(--deep);
+    display:flex;
+    padding:10px 6px calc(10px + var(--safe-bottom));
+    border-top:1px solid rgba(239,231,214,0.1);
+  }
+  nav.bottom button{
+    flex:1;
+    background:none;border:none;
+    color:rgba(239,231,214,0.45);
+    font-family:'Jost',sans-serif;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:8px 4px 4px;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  nav.bottom button .ic{width:17px;height:17px;display:block;}
+  nav.bottom button.active{color:var(--brass);}
+  nav.bottom button svg{stroke:currentColor;fill:none;stroke-width:1.3;width:100%;height:100%;}
+
+  @media (min-width:560px){
+    #app{border-left:1px solid var(--line);border-right:1px solid var(--line);}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header class="top" id="topHeader">
+    <div class="top-inner">
+      <div class="monogram">J · P · T</div>
+      <h1 class="trip-title">Europe <em>&amp;</em> Korea</h1>
+      <div class="trip-dates">6 — 29 September 2026</div>
+      <div class="hairline"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="screen active" id="screen-itinerary">
+      <div class="itin-sticky" id="itinSticky">
+        <nav class="legs" id="legNav"></nav>
+        <div class="city-hero" id="cityHero">
+          <img class="hero-img" id="heroImgA" alt="">
+          <img class="hero-img" id="heroImgB" alt="">
+          <div class="hero-overlay"></div>
+          <div class="hero-text">
+            <div class="hero-eyebrow" id="heroEyebrow">Now arriving</div>
+            <div class="hero-city" id="heroCity">Outbound</div>
+          </div>
+        </div>
+      </div>
+      <div id="itinDays"></div>
+    </section>
+
+    <section class="screen" id="screen-flights">
+      <div class="page-title">
+        <div class="eyebrow">In the air</div>
+        <h2>Flight Summary</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="bag-disclaimer">Baggage figures are each airline's standard entitlement for the booked cabin — confirm exact numbers on your e-ticket, as fare type or status can raise them.</div>
+      <div id="flightsList"></div>
+      <footer class="note">Ten sectors, four countries.<br>Cathay Pacific · Finnair · SAS</footer>
+    </section>
+
+    <section class="screen" id="screen-stays">
+      <div class="page-title">
+        <div class="eyebrow">Where we lay our heads</div>
+        <h2>Accommodation</h2>
+        <div class="rule"></div>
+      </div>
+      <div id="staysList"></div>
+      <footer class="note">Five stays, five cities.</footer>
+    </section>
+
+    <section class="screen" id="screen-tips">
+      <div class="page-title">
+        <div class="eyebrow">For Theodore</div>
+        <h2>Travelling with an Infant</h2>
+        <div class="rule"></div>
+      </div>
+      <div id="tipsList"></div>
+      <footer class="note">Safe travels, always.</footer>
+    </section>
+  </main>
+
+  <nav class="bottom" id="bottomNav">
+    <button data-screen="itinerary" class="active">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+      Journey
+    </button>
+    <button data-screen="flights">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M2 16l20-7-4 15-5-6-5 4-1-5-5-1z"/></svg></span>
+      Flights
+    </button>
+    <button data-screen="stays">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 21V9l9-6 9 6v12M8 21v-7h8v7"/></svg></span>
+      Stays
+    </button>
+    <button data-screen="tips">
+      <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M6 21c0-4 2.7-6 6-6s6 2 6 6"/></svg></span>
+      Baby
+    </button>
+  </nav>
+
+</div>
+
+<script id="trip-data" type="application/json">
+{"days": [{"day": 1, "section": "OUTBOUND: SYDNEY → SEOUL → LONDON", "date": "Sun 6 Sep", "destination": "Sydney → Hong Kong", "flight": "CX 138 | Departs 21:55 → Arrives 07Sep 05:10\n(Premium Economy | Ref: EW9V4J)\nAirbus A350-900", "activitiesPrimary": [{"text": "Overnight flight – rest & settle Theodore", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "On board: Dinner service", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "On board: Breakfast service", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "In transit", "notes": "Check-in: latest 20:50. 2 checked bags (up to 32kg each)\n🚼 SYD (Kingsford Smith) baby change: Dedicated parent rooms in T1 International (Departures Level 3 & Arrivals Level 2). Premium parent rooms with private feeding bays near Gate 55-60. \nRecommendation: start in the lounge for food & drinks, then use the dedicated parent room for feeding/changing before boarding\n\nHKG transit: Baby Care Rooms near Gates 40-60."}, {"day": 2, "section": "OUTBOUND: SYDNEY → SEOUL → LONDON", "date": "Mon 7 Sep", "destination": "Hong Kong → Seoul Incheon", "flight": "CX 410 | Departs 09:25 → Arrives 14:05\n(Economy | Ref: EW9V4J)\nBoeing 777-300", "activitiesPrimary": [{"text": "Brief layover HK. On arrival Seoul: rest & settle", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "On board: Breakfast service", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [], "dinnerOptional": [], "accommodation": "In transit", "notes": "Arrive Seoul 14:05.\n🚼 HKG baby change: 'Baby Care Rooms' on every level of T1. Fully equipped with changing tables, feeding chairs, sterilisers & sinks. Best rooms near Gates 1-20 & 40-60 (Midfield Concourse).\nRecommendation: Strongly use the lounge — HKG's Cathay lounges are among the finest in the world and The Bridge is freshly renovated with enormous capacity."}, {"day": 3, "section": "OUTBOUND: SYDNEY → SEOUL → LONDON", "date": "Mon 7 Sep", "destination": "Seoul – Airport Transit", "flight": "AY 0042 | Seoul ICN 21:50 → Helsinki 05:30+1\nAY 1331 | Helsinki 08:00 → London 09:10\n(Business Class | Ref: 8ST2W6)", "activitiesPrimary": [{"text": "Luggage Storage located in Terminal 1 Level 3 - Hanjin Express", "rating": null, "free": false}, {"text": "Baby room Terminal 1:", "rating": null, "free": false}, {"text": "Arrival: Gates B and E", "rating": null, "free": false}, {"text": "Departure: Gates D and K", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Airport dining – Terminal 1 has great Korean food options incl. Bibimbap House & Paris Baguette", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Airport dining – Korean BBQ Grill & various restaurants airside", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "In transit", "notes": "🚼 ICN Baby change: Dedicated nursing rooms on every floor of T1 & T2 (look for 수유실 signs). Family rest rooms near Gates 101–132 & 230–270. Stroller loan available free at T1 Information Desk (Level 3).\nRecommendation: Use the oneworld lounge for meals and adult comfort, but do all infant care in the dedicated nursing rooms — they're genuinely world-class and far better equipped than anything inside the lounge.\n⚠️ Flight to London departs 21:50"}, {"day": 4, "section": "LONDON (8–13 Sep) | Athenaeum Hotel", "date": "Tues 8 Sep", "destination": "Arrive London", "flight": "Arrive Heathrow 09:10 (AY1331)\nTerminal 3  - Airport transfer to hotel booked", "activitiesPrimary": [{"text": "Roam around Mayfair", "rating": null, "free": false}], "activitiesOptional": [{"text": "Rest day – light walk along Green Park or St James's Park (flat pram paths, ducks & birds for Theodore)", "rating": null, "free": false}], "lunchPrimary": [{"text": "Cafes: KAYU, Shepherd Market, The Punch Bowl, Hideaway Coffee House", "rating": null, "free": false}], "lunchOptional": [{"text": "The Wolseley – elegant all-day café", "rating": "4.4", "free": false}, {"text": "Or Dishoom Carnaby – fun brunch", "rating": "4.6", "free": false}], "dinnerPrimary": [{"text": "Gymkhana (Indian)", "rating": null, "free": false}], "dinnerOptional": [{"text": "Sketch London – unique interiors", "rating": "4.5", "free": false}, {"text": "(book ahead)", "rating": null, "free": false}], "accommodation": "Athenaeum Hotel (cot requested – subject to availability)", "notes": "Arrive early – ask for early check-in. Easy tube/Heathrow Express from T3\n🚼 LHR baby change: T3 Arrivals has family rooms with changing tables near baggage reclaim. Airside T3 has dedicated 'Parent & Baby' rooms near Gates C & D. All terminals have accessible baby changing."}, {"day": 5, "section": "LONDON (8–13 Sep) | Athenaeum Hotel", "date": "Wed 9 Sep", "destination": "London", "flight": "—", "activitiesPrimary": [{"text": "Stroll around Grovenor Sq and Berkeley Sq, Selfridges", "rating": null, "free": false}], "activitiesOptional": [{"text": "ZSL London Zoo – animals at eye-level for infants, bright colours, safe pram routes", "rating": "4.4", "free": false}, {"text": "Hyde Park / Serpentine – open green space, swans on the lake", "rating": null, "free": false}], "lunchPrimary": [{"text": "Mercato Mayfair, Nicolas Rouzaud, Rex Delicatessen, Claridges ArtSpace Café, Ralph's Coffee", "rating": null, "free": false}], "lunchOptional": [{"text": "Ottolenghi Notting Hill – beautiful café", "rating": "4.5", "free": false}, {"text": "Flatbread & produce platters", "rating": null, "free": false}], "dinnerPrimary": [{"text": "Kevin's Wedding Banquet - Pheonix Palace 7pm", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Athenaeum Hotel", "notes": "ZSL has dedicated baby/feeding rooms & pram hire\n\nWedding banquet evening – confirm dress code & timing"}, {"day": 6, "section": "LONDON (8–13 Sep) | Athenaeum Hotel", "date": "Thurs 10 Sep", "destination": "London – Kevin's Wedding Banquet", "flight": "—", "activitiesPrimary": [{"text": "Chill around Mayfair before Lucky Cat", "rating": null, "free": false}], "activitiesOptional": [{"text": "Borough Market – vibrant, colourful stalls; great sensory experience for Theodore", "rating": "4.6", "free": false}, {"text": "Walk Millennium Bridge – river views", "rating": null, "free": false}], "lunchPrimary": [{"text": "Lucky Cat (booked 12:00pm)", "rating": "4.4", "free": false}, {"text": "Gordon Ramsay concept – Asian small plates", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Darjeeling Express – flavourful, relaxed", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Athenaeum Hotel", "notes": ""}, {"day": 7, "section": "LONDON (8–13 Sep) | Athenaeum Hotel", "date": "Fri 11 Sep", "destination": "London", "flight": "—", "activitiesPrimary": [{"text": "Aquarium + Big Ben", "rating": null, "free": false}], "activitiesOptional": [{"text": "Natural History Museum – dinosaur hall & giant blue whale fascinate infants (sensory scale)", "rating": "4.7", "free": true}, {"text": "Kensington Gardens – Italian Garden with fountains OR", "rating": null, "free": false}, {"text": "Sealife London", "rating": null, "free": false}], "lunchPrimary": [{"text": "Padella Borough – fresh pasta", "rating": "4.5", "free": false}, {"text": "Or Monmouth Coffee + sandwich", "rating": "4.6", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Brat Restaurant – wood-fired, relaxed", "rating": "4.5", "free": false}, {"text": "J. Sheekey – classic London seafood", "rating": "4.4", "free": false}, {"text": "Or Barrafina Adelaide St", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Athenaeum Hotel", "notes": "NHM has dedicated baby changing & pram accessible throughout"}, {"day": 8, "section": "LONDON (8–13 Sep) | Athenaeum Hotel", "date": "Sat 12 Sep", "destination": "London – WEDDING DAY", "flight": "—", "activitiesPrimary": [{"text": "Borough Market", "rating": null, "free": false}], "activitiesOptional": [{"text": "Covent Garden – street performers, music & movement captivating for infants", "rating": "4.5", "free": false}, {"text": "Tower of London exterior & Tower Bridge walkway", "rating": "4.5", "free": false}, {"text": "Hampstead Heath (rolling hills, ponds, nature)", "rating": "4.7", "free": false}, {"text": "Or Columbia Road Flower Market (saturated colours – brilliant for infant visual stimulation)", "rating": "4.6", "free": false}], "lunchPrimary": [{"text": "Arabica Food & Spice Borough – mezze", "rating": "4.4", "free": false}, {"text": "Or Café Murano", "rating": "4.5", "free": false}, {"text": "Peggy Jean Cakes & Coffee", "rating": "4.5", "free": false}, {"text": "Or Sunday brunch at The Wolseley", "rating": "4.4", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Wedding Reception - Smiths of Smithfield - 4:30pm start", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Athenaeum Hotel", "notes": "Stroller access throughout Covent Garden & Tower Bridge walkway\n\nWedding day – confirm all logistics morning"}, {"day": 9, "section": "LONDON → COPENHAGEN (13–15 Sep) | Brøchner Hotels", "date": "Sun 13 Sep", "destination": "London → Copenhagen", "flight": "SK 502 | Heathrow T2 10:20 → CPH 13:20\n(Ref: XKV3SF)\nCheck-in by 09:35 | 1PC baggage", "activitiesPrimary": [{"text": "Afternoon arrival – Nyhavn Harbour walk: colourful buildings & boats; great visual stimulus for Theodore", "rating": "4.7", "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "On arrival: Café Norden – classic Danish café", "rating": "4.4", "free": false}, {"text": "Or Paludan Bogcafé", "rating": "4.4", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Höst – beautiful Nordic interior", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Apartment by Brøchner Hotels – superior apartment (cot confirmed)", "notes": "SAS Terminal 2 Heathrow. \n🚼 LHR T2 baby change: Parent rooms in T2 Departures Level 4 (pre-security) and airside near Gates A & B. T2 has the best family facilities of all Heathrow terminals."}, {"day": 10, "section": "LONDON → COPENHAGEN (13–15 Sep) | Brøchner Hotels", "date": "Mon 14 Sep", "destination": "Copenhagen", "flight": "—", "activitiesPrimary": [{"text": "Tivoli Gardens – colourful lights, music, gentle rides; magical infant experience", "rating": "4.5", "free": false}, {"text": "Rosenborg Castle exterior & gardens – peacocks & greenery", "rating": null, "free": false}, {"text": "Changing of Guard – Amalienborg Palace (11am daily)", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Bakery: BUKA; Hart Bageri, Juno the Bakery", "rating": null, "free": false}, {"text": "Lunch: Schønnemann (for smørrebrød) 1:15PM BOOKED (no pram)", "rating": null, "free": false}], "lunchOptional": [{"text": "Torvehallerne KBH Market – fresh produce, open stalls", "rating": "4.6", "free": false}, {"text": "Grød – wholesome Nordic bowls", "rating": "4.4", "free": false}], "dinnerPrimary": [{"text": "Geranium (or nearby Bæst)", "rating": "4.5", "free": false}, {"text": "Bæst – wood-fired pizza, relaxed & pram friendly", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Apartment by Brøchner Hotels", "notes": "Tivoli has pram rental & baby facilities. Check Changing of Guard time (11am)"}, {"day": 11, "section": "LONDON → COPENHAGEN (13–15 Sep) | Brøchner Hotels", "date": "Tue 15 Sep", "destination": "Copenhagen → Stockholm", "flight": "SK 1422 | CPH T3 12:55 → ARN 14:10\n(Ref: XKX24D | Jonathan)\nCheck-in by 12:15 | 1PC baggage", "activitiesPrimary": [{"text": "Morning: Nyhavn waterfront stroll again or time before airport", "rating": null, "free": true}, {"text": "Note: half-day only", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Airport or quick stop: Andersen Bakery CPH", "rating": "4.5", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Arrive Stockholm ~14:10 – Östermalms Saluhall food hall", "rating": "4.5", "free": false}, {"text": "Or dinner near Nobis Hotel", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Nobis Hotel Stockholm (cot requested)", "notes": "Copenhagen morning → Stockholm afternoon. Settle in & explore Stureplan area\n🚼 CPH baby change: 'Family Rooms' in T2 & T3 with changing tables, nursing chairs & private space. Located near Gate C and in main shopping area. Copenhagen Airport is very baby-friendly.\n🚼 ARN baby change: 'Familjerum' nursing/changing rooms in Terminals 2, 4 & 5. Pram-friendly lifts throughout."}, {"day": 13, "section": "STOCKHOLM (15–19 Sep) | Nobis Hotel", "date": "Wed 16 Sep", "destination": "Stockholm", "flight": "—", "activitiesPrimary": [{"text": "Shopping around: Sodermalm (boutiques), Drottninggtan and Biboliotekstan", "rating": null, "free": false}, {"text": "Check out shopping (Nine Pine)", "rating": null, "free": false}], "activitiesOptional": [{"text": "Gamla Stan (Old Town) – cobblestone lanes, colourful buildings, street musicians; rich sensory for Theodore", "rating": "4.7", "free": false}, {"text": "Royal Palace – Changing of Guard (12pm)", "rating": "4.5", "free": false}], "lunchPrimary": [{"text": "Lillebrors bageri (TBD a bit far)Walk to wharf - Skeppsbro Bakery (good outdoor seating)", "rating": null, "free": false}], "lunchOptional": [{"text": "Rosendals Trädgård – garden café", "rating": "4.6", "free": false}, {"text": "Or Café Pascal", "rating": "4.5", "free": false}], "dinnerPrimary": [{"text": "Meatballs for the People – iconic, relaxed", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Nobis Hotel Stockholm", "notes": "Gamla Stan is cobblestone – consider baby carrier over pram for narrow alleys"}, {"day": 14, "section": "STOCKHOLM (15–19 Sep) | Nobis Hotel", "date": "Thu 17 Sep", "destination": "Stockholm", "flight": "—", "activitiesPrimary": [{"text": "Vasamuseet (Vasa Museum) – enormous 17th-century warship; overwhelming scale for infants under 18", "rating": "4.8", "free": true}, {"text": "Djurgården island walk – open green space", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Stora Bageriet (very close to our hotel)", "rating": null, "free": false}, {"text": "Visit Ostermalms Food Hall- Lennart & Bror Fisk", "rating": null, "free": false}], "lunchOptional": [{"text": "Café Blom (Vasa Museum café)", "rating": "4.4", "free": false}, {"text": "Or Rosendals again", "rating": null, "free": false}], "dinnerPrimary": [{"text": "Ekstedt – wood-fired Nordic cuisine (book in advance)", "rating": "4.6", "free": false}], "dinnerOptional": [], "accommodation": "Nobis Hotel Stockholm", "notes": "Vasa is fully pram accessible with lifts. Baby changing facilities available"}, {"day": 15, "section": "STOCKHOLM (15–19 Sep) | Nobis Hotel", "date": "Fri 18 Sep", "destination": "Stockholm", "flight": "—", "activitiesPrimary": [{"text": "Go Vasa Museum and Djugarden island", "rating": null, "free": false}], "activitiesOptional": [{"text": "Skansen Open-Air Museum – live animals (reindeer, moose, bears), traditional houses; Theodore will love the animals", "rating": "4.6", "free": false}, {"text": "Monteliusvägen lookout – panoramic city views", "rating": null, "free": false}], "lunchPrimary": [{"text": "Slipen Bakery (on same island as Vasa Museum)- Tennostopet Restaurang", "rating": null, "free": false}, {"text": "Restaurant Pelikan (meatballs but a bit far)", "rating": null, "free": false}], "lunchOptional": [{"text": "Skansen restaurant or Djurgårdsbrunns Värdshus", "rating": "4.5", "free": false}], "dinnerPrimary": [{"text": "Grands Verandan", "rating": "4.4", "free": false}, {"text": "Or Prinsen Restaurant", "rating": "4.4", "free": false}], "dinnerOptional": [], "accommodation": "Nobis Hotel Stockholm", "notes": "Skansen has pram paths & animal feeding sessions – check schedule. Animals best early morning"}, {"day": 16, "section": "STOCKHOLM (15–19 Sep) | Nobis Hotel", "date": "Sat 19 Sep", "destination": "Stockholm → Helsinki", "flight": "AY 0824 | ARN T2 12:35 → HEL 14:35\n(Ref: 7QZNLY | Jonathan)\nCheck-in by 11:50 | 1PC baggage\nOperated by Nordic Regional for Finnair", "activitiesPrimary": [{"text": "Morning: final Stockholm stroll – Östermalms Saluhall or Gamla Stan souvenir shopping before airport", "rating": null, "free": false}, {"text": "Half-day travel", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Quick stop: Andersen Bakery or Arlanda airport café", "rating": "4.4", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Arrive Helsinki ~14:35 – Esplanadi Park walk or settle into hotel", "rating": null, "free": false}, {"text": "Ravintola Nokka – Nordic riverside dining", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Hotel St George Helsinki (cot requested)", "notes": "🚼 ARN baby change: Nursing rooms in all terminals (marked 'Amningsrum'). Family toilets throughout. Pram lifts at all gates. \nRecommendation: Use the Plaza Premium lounge in T2 for comfort and food — it's better than sitting airside. But for changing/feeding, the public parent rooms in T2 should be nearby and adequately equipped."}, {"day": 17, "section": "STOCKHOLM → HELSINKI (19–22 Sep) | Hotel St George", "date": "Sun 20 Sep", "destination": "Helsinki", "flight": "—", "activitiesPrimary": [{"text": "Walk to Design District and grab coffee at Andante Coffee", "rating": null, "free": false}], "activitiesOptional": [{"text": "Helsinki Cathedral & Senate Square – grand architecture, open plaza; Theodore loves the echoing space", "rating": "4.6", "free": true}, {"text": "Uspenski Cathedral – colourful onion domes", "rating": "4.4", "free": false}, {"text": "Old Market Hall (Vanha Kauppahalli) – indoor market", "rating": "4.5", "free": false}], "lunchPrimary": [{"text": "St George Bakery - Check out Helsinki Market Square (close by food fall)", "rating": null, "free": false}, {"text": "El Fant coffee", "rating": null, "free": false}, {"text": "Restaurant Savotta", "rating": null, "free": false}], "lunchOptional": [{"text": "Old Market Hall food stalls", "rating": "4.5", "free": false}, {"text": "Or Café Regatta (cosy waterfront)", "rating": "4.5", "free": false}], "dinnerPrimary": [{"text": "Restaurant Savoy", "rating": "4.4", "free": false}, {"text": "Or Gaijin – Asian-inspired Nordic", "rating": "4.5", "free": false}], "dinnerOptional": [], "accommodation": "Hotel St George Helsinki", "notes": "Cathedral square is flat & pram friendly. Market Hall has café seating inside"}, {"day": 18, "section": "STOCKHOLM → HELSINKI (19–22 Sep) | Hotel St George", "date": "Mon 21 Sep", "destination": "Helsinki", "flight": "—", "activitiesPrimary": [{"text": "Amos Rex", "rating": null, "free": false}], "activitiesOptional": [{"text": "Temppeliaukio Church (Rock Church) – carved into solid rock; incredible acoustics, light & texture for Theodore", "rating": "4.7", "free": false}, {"text": "Suomenlinna Sea Fortress – ferry ride (infants love boats!), open green fortress island", "rating": "4.7", "free": false}], "lunchPrimary": [{"text": "Yestie Boi", "rating": null, "free": false}, {"text": "Restaurant Olivia - Kluuvi", "rating": null, "free": false}, {"text": "The Grand (Finnish beef burger + onion soup)", "rating": null, "free": false}], "lunchOptional": [{"text": "Café Chapman (Suomenlinna)", "rating": "4.4", "free": false}, {"text": "Or picnic on the island", "rating": null, "free": false}], "dinnerPrimary": [{"text": "Löyly – sauna restaurant on waterfront", "rating": "4.5", "free": false}, {"text": "Or Savotta", "rating": "4.4", "free": false}], "dinnerOptional": [], "accommodation": "Hotel St George Helsinki", "notes": "Suomenlinna ferry runs every 15-30 min from Market Square. Pram fits on ferry."}, {"day": 19, "section": "STOCKHOLM → HELSINKI (19–22 Sep) | Hotel St George", "date": "Tue 22 Sep", "destination": "Helsinki → Seoul (overnight)", "flight": "AY 0041 | HEL T1 17:30 → ICN 11:20+1\n(Ref: 8ST2W6 | Jonathan)\nCheck-in by 16:30 | 2PC baggage (up to 32kg each)", "activitiesPrimary": [{"text": "Morning: Esplanadi Park – last Nordic stroll, buskers & terrace cafés", "rating": null, "free": false}, {"text": "Alexander Street (Alexandersgatan) shopping & Helsinki Market Square – final Scandinavian market", "rating": null, "free": false}, {"text": "Afternoon at HEL airport – Finnair lounge access (business class)", "rating": null, "free": false}, {"text": "Settle Theodore for overnight flight", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Café Aalto (Akateeminen Kirjakauppa)", "rating": "4.5", "free": false}, {"text": "Or Karl Fazer Café", "rating": "4.5", "free": false}, {"text": "Early lunch/snack before heading to airport", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Airport dining at HEL or early dinner before evening flight", "rating": null, "free": false}, {"text": "On board: dinner service (AY0041)", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Hotel St George Helsinki → check out\n\nIn transit – overnight flight to Seoul", "notes": "Last Helsinki morning. Head to airport early – check-in closes 16:30.\n\n🚼 HEL baby change: Family/nursing rooms in T1 & T2 – look for 'Perhehuone' (Finnish) signs before security and airside. Baby care products available at airport pharmacy.\nSeat 01H. Arrive Seoul ICN 23 Sep 11:20.\nRecommendation: Strongly use the Finnair Business Lounge. It's specifically designed for the pre-long-haul experience, has rest zones, showers, and hot food — far superior to sitting in the terminal with an infant before an overnight flight."}, {"day": 21, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Wed 23 Sep", "destination": "Arrive Seoul", "flight": "Arrive ICN 11:20 (from overnight AY0041) - airport transfer to hotel booked", "activitiesPrimary": [{"text": "Walk around Myeongdong", "rating": null, "free": false}, {"text": "8seconds (check out clothing)", "rating": null, "free": false}], "activitiesOptional": [{"text": "Rest day – check in, settle Theodore", "rating": null, "free": false}, {"text": "Evening: Myeongdong Street – neon lights, street food stalls; sensory feast for an infant", "rating": "4.5", "free": false}], "lunchPrimary": [{"text": "Near hotel: Myeongdong Kyoja – famous kalguksu noodles", "rating": "4.5", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Odarjip Ganjang Gejang", "rating": null, "free": false}, {"text": "Myeongdong night market", "rating": null, "free": false}], "dinnerOptional": [{"text": "Jungsik – modern Korean fine dining", "rating": "4.6", "free": false}, {"text": "(Or relaxed Korean BBQ nearby)", "rating": null, "free": false}], "accommodation": "Le Méridien Myeongdong (cot requested)", "notes": "Arrive mid-morning. Ask for early check-in. Rest is key after long travel"}, {"day": 22, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Thurs 24 Sep", "destination": "Seoul", "flight": "—", "activitiesPrimary": [{"text": "Hyundai Department Store - shopping", "rating": null, "free": false}, {"text": "Folnua", "rating": null, "free": false}], "activitiesOptional": [{"text": "Seoul Grand Park Zoo – large zoo with pandas, lions, giraffes; Theodore will love", "rating": "4.4", "free": false}, {"text": "Or Gyeongbokgung Palace – colourful hanbok-clad guards & wide plazas", "rating": "4.7", "free": false}], "lunchPrimary": [{"text": "Seowonjuk (morning congee)", "rating": null, "free": false}, {"text": "Gebangsikdang (near Hyundai department store) - other soy marinated crab", "rating": null, "free": false}, {"text": "Standard Bread (near department store)", "rating": null, "free": false}], "lunchOptional": [{"text": "Gwangjang Market – traditional Korean street food", "rating": "4.5", "free": false}, {"text": "Bibimbap & japchae", "rating": null, "free": false}], "dinnerPrimary": [{"text": "Myeongdong Kyoja (if line not bad)", "rating": null, "free": false}], "dinnerOptional": [{"text": "Mingles – modern Korean cuisine", "rating": "4.7", "free": false}, {"text": "(book in advance)", "rating": null, "free": false}], "accommodation": "Le Méridien Myeongdong", "notes": "Palace changing of guard 10am & 2pm. Fully pram accessible. Hanbok rental nearby"}, {"day": 23, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Fri 25 Sep", "destination": "Seoul", "flight": "—", "activitiesPrimary": [{"text": "Seongsu - check out Blue Elepahnt, Matin Kim, Anoetic, MargeSherwo OD, Mo-no-ha, Haus Nowhere (cool Gentle Monster robots)", "rating": null, "free": false}], "activitiesOptional": [{"text": "Bukchon Hanok Village – traditional wooden hanok houses on a hillside; beautiful colours & textures", "rating": "4.6", "free": false}, {"text": "Cheonggyecheon Stream – urban stream with stepping stones & willow trees", "rating": "4.5", "free": false}], "lunchPrimary": [{"text": "Jayeondo Sogeumppang (salt bread at Seongsu)", "rating": null, "free": false}, {"text": "Han Jun Sun - rice cakes", "rating": null, "free": false}, {"text": "Rafre fruit dessert", "rating": null, "free": false}], "lunchOptional": [{"text": "Fritz Coffee Company Mapo (specialty coffee)", "rating": "4.6", "free": false}, {"text": "Or Café Onion Anguk – stunning café in renovated hanok", "rating": "4.6", "free": false}], "dinnerPrimary": [{"text": "Odarjip Ganjang Gejang", "rating": null, "free": false}, {"text": "Myeongdong night market", "rating": null, "free": false}], "dinnerOptional": [{"text": "Congdu – Korean royal cuisine in a hanok", "rating": "4.5", "free": false}], "accommodation": "Le Méridien Myeongdong", "notes": "Bukchon is hilly – baby carrier recommended. Cheonggyecheon is flat & pram perfect"}, {"day": 24, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Sat 26 Sep", "destination": "Seoul", "flight": "—", "activitiesPrimary": [{"text": "Dad and Theo goes palace", "rating": null, "free": false}, {"text": "Mum does: Seoulisque Skin (10AM) and Ecojardin Mapo Aeogae (1PM)", "rating": null, "free": false}], "activitiesOptional": [{"text": "N Seoul Tower (Namsan) – cable car ride up; panoramic city views", "rating": "4.5", "free": false}, {"text": "Namsan Park walk – forested trails, fresh air", "rating": null, "free": false}], "lunchPrimary": [{"text": "Egg Drop – popular Korean brunch spot", "rating": "4.5", "free": false}, {"text": "Or Tartine (Itaewon)", "rating": "4.4", "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "Myeongdong Seoseo Galbi", "rating": null, "free": false}], "dinnerOptional": [{"text": "Gaon – Korean haute cuisine", "rating": "4.6", "free": false}, {"text": "(Or local Samgyeopsal BBQ)", "rating": null, "free": false}], "accommodation": "Le Méridien Myeongdong", "notes": "Cable car is pram accessible. Namsan has wide paved paths"}, {"day": 25, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Sun 27 Sep", "destination": "Seoul", "flight": "—", "activitiesPrimary": [{"text": "Starfield Library (has a mall too)", "rating": null, "free": false}, {"text": "Then taxi to Yeouido Hangang Park (eat ramen by the river)", "rating": null, "free": false}], "activitiesOptional": [{"text": "Lotte World Tower & Mall – indoor aquarium (Lotte Aquarium) great for infants – fish & colour", "rating": "4.4", "free": false}, {"text": "Hangang River Park – riverside greenery, rent baby stroller there", "rating": null, "free": false}], "lunchPrimary": [{"text": "Eat ramen and fried chicken by Han river", "rating": null, "free": false}], "lunchOptional": [{"text": "Osulloc Tea House Insadong", "rating": "4.5", "free": false}, {"text": "Or Bread05 – artisan bakery", "rating": "4.5", "free": false}], "dinnerPrimary": [{"text": "Balwoo Gongyang – temple food, serene atmosphere", "rating": "4.6", "free": false}, {"text": "Or La Yeon Korean fine dining", "rating": "4.7", "free": false}], "dinnerOptional": [], "accommodation": "Le Méridien Myeongdong", "notes": "Lotte Aquarium is indoors & excellent for rainy day. Full pram access"}, {"day": 26, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Mon 28 Sep", "destination": "Seoul → Hong Kong → Sydney", "flight": "CX 411 | ICN 15:10 → HKG 18:00\n(Ref: EW9V4J)\nCX 161 | HKG 21:35 → SYD 08:40+1\n(Premium Economy | A350-900)", "activitiesPrimary": [{"text": "Morning: final Myeongdong shopping & street food", "rating": null, "free": false}, {"text": "Check out & head to Incheon - airport transfer from hotel to airport booked", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [{"text": "Myeongdong street food for last Korean flavours", "rating": null, "free": false}], "lunchOptional": [], "dinnerPrimary": [{"text": "On board: Refreshments (CX411) + Dinner (CX161)", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "In transit → Home", "notes": "CX 161 arrives Sydney 29 Sep 08:40. 2 checked bags. Premium Economy – extra room for Theodore on lap\n🚼 ICN (return) baby change: Same as outbound – nursing rooms (수유실) every floor T1. HKG transit: Baby Care Rooms near Gates 40-60. SYD arrival: Parent room T1 Arrivals Level 2."}, {"day": 27, "section": "SEOUL (23–28 Sep) | Le Méridien Myeongdong", "date": "Tues 29 Sep", "destination": "Sydney – HOME!", "flight": "Arrive Kingsford Smith 08:40", "activitiesPrimary": [{"text": "Welcome home!", "rating": null, "free": false}], "activitiesOptional": [], "lunchPrimary": [], "lunchOptional": [], "dinnerPrimary": [{"text": "Home-cooked welcome meal", "rating": null, "free": false}], "dinnerOptional": [], "accommodation": "Home", "notes": "Arrive T1 International. Welcome home!"}], "flights": [{"n": 1, "date": "Sun 6 Sep", "airline": "Cathay Pacific", "flight": "CX 138", "from": "Sydney (SYD)", "to": "Hong Kong (HKG)", "depart": "21:55", "arrive": "05:10+1", "cls": "Premium Economy", "ref": "EW9V4J", "notes": "Priscilla + Theodore. A350. Dinner+Breakfast", "bagAdult": "2 checked bags · 23kg each, 1 cabin bag · 7kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 2, "date": "Mon 7 Sep", "airline": "Cathay Pacific", "flight": "CX 410", "from": "Hong Kong (HKG)", "to": "Seoul Incheon (ICN)", "depart": "09:25", "arrive": "14:05", "cls": "Economy", "ref": "EW9V4J", "notes": "Priscilla + Theodore. B777. Breakfast", "bagAdult": "2 checked bags · 23kg each, 1 cabin bag · 7kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 3, "date": "Sun 7 Sep", "airline": "Finnair", "flight": "AY 0042", "from": "Seoul Incheon (ICN)", "to": "Helsinki (HEL)", "depart": "21:50", "arrive": "05:30+1", "cls": "Business", "ref": "8ST2W6", "notes": "Jonathan. Seat 01H. 2 bags x 32kg", "bagAdult": "2 checked bags · 32kg each, 2 cabin bags · 12kg combined", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 4, "date": "Mon 8 Sep", "airline": "Finnair", "flight": "AY 1331", "from": "Helsinki (HEL)", "to": "London Heathrow (LHR)", "depart": "08:00", "arrive": "09:10", "cls": "Business", "ref": "8ST2W6", "notes": "Jonathan. Seat 01H. T3. Check-in by 07:15", "bagAdult": "Up to 2 checked bags · 23kg each (short-haul Business), 2 cabin bags · 12kg combined", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 5, "date": "Sun 13 Sep", "airline": "SAS (Sas Connect)", "flight": "SK 502", "from": "London Heathrow (LHR)", "to": "Copenhagen (CPH)", "depart": "10:20", "arrive": "13:20", "cls": "Economy", "ref": "XKV3SF", "notes": "THEODORE ticket. T2. Check-in 09:35. 1PC bag", "bagAdult": "1 checked bag · 23kg, 1 cabin bag · 8kg", "bagInfant": "Theodore's own ticket this sector — same as adult: 1 × 23kg"}, {"n": 6, "date": "Tue 15 Sep", "airline": "SAS", "flight": "SK 1422", "from": "Copenhagen (CPH)", "to": "Stockholm Arlanda (ARN)", "depart": "12:55", "arrive": "14:10", "cls": "Economy", "ref": "XKX24D", "notes": "Jonathan. T3. Check-in 12:15. 1PC bag", "bagAdult": "1 checked bag · 23kg, 1 cabin bag · 8kg", "bagInfant": "As lap infant: stroller & car seat free; no checked bag on base fare"}, {"n": 7, "date": "Sat 19 Sep", "airline": "Finnair (Nordic Regional)", "flight": "AY 0824", "from": "Stockholm Arlanda (ARN)", "to": "Helsinki (HEL)", "depart": "12:35", "arrive": "14:35", "cls": "Economy", "ref": "7QZNLY", "notes": "Jonathan. T2. Seat 03C. Check-in 11:50. 1PC", "bagAdult": "1 checked bag · 23kg, 1 cabin bag · 8kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 8, "date": "Mon 22 Sep", "airline": "Finnair", "flight": "AY 0041", "from": "Helsinki (HEL)", "to": "Seoul Incheon (ICN)", "depart": "17:30", "arrive": "11:20+1", "cls": "Economy", "ref": "8ST2W6", "notes": "Jonathan. Seat 01H. T1. Check-in 16:30. 2 bags", "bagAdult": "2 checked bags · 23kg each, 1 cabin bag · 8kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 9, "date": "Mon 28 Sep", "airline": "Cathay Pacific", "flight": "CX 411", "from": "Seoul Incheon (ICN)", "to": "Hong Kong (HKG)", "depart": "15:10", "arrive": "18:00", "cls": "Economy", "ref": "EW9V4J", "notes": "Priscilla + Theodore. B777. Refreshments", "bagAdult": "2 checked bags · 23kg each, 1 cabin bag · 7kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}, {"n": 10, "date": "Mon 28 Sep", "airline": "Cathay Pacific", "flight": "CX 161", "from": "Hong Kong (HKG)", "to": "Sydney (SYD)", "depart": "21:35", "arrive": "08:40+1", "cls": "Premium Economy", "ref": "EW9V4J", "notes": "Priscilla + Theodore. A350. Dinner+Breakfast", "bagAdult": "2 checked bags · 23kg each, 1 cabin bag · 7kg", "bagInfant": "1 checked bag · 23kg, plus stroller & car seat free"}], "stays": [{"hotel": "Athenaeum Hotel", "city": "London 🇬🇧", "checkin": "8 Sep (Mon)", "checkout": "13 Sep (Sat)", "cot": "Requested – subject to availability ⚠️", "notes": "5-star. Mayfair. Ask to confirm cot on arrival. Wedding events nearby."}, {"hotel": "Apartment by Brøchner Hotels\n(Superior Apartment)", "city": "Copenhagen 🇩🇰", "checkin": "13 Sep (Sun)", "checkout": "15 Sep (Tue)", "cot": "Confirmed ✅", "notes": "Full apartment – kitchen, living space. Ideal for Theodore."}, {"hotel": "Nobis Hotel Stockholm", "city": "Stockholm 🇸🇪", "checkin": "15 Sep (Tue)", "checkout": "19 Sep (Sat)", "cot": "Requested ⚠️", "notes": "5-star. Norrmalmstorg. Confirm cot closer to date."}, {"hotel": "Hotel St George Helsinki", "city": "Helsinki 🇫🇮", "checkin": "19 Sep (Sat)", "checkout": "22 Sep (Tue)", "cot": "Requested ⚠️", "notes": "Boutique 5-star. Yrjönkatu. Confirm cot closer to date."}, {"hotel": "Le Méridien Myeongdong", "city": "Seoul 🇰🇷", "checkin": "23 Sep (Wed)", "checkout": "28 Sep (Mon)", "cot": "Requested ⚠️", "notes": "5-star. Myeongdong. Check request confirmed pre-arrival."}], "tips": [{"section": "✈️ Flights", "items": [{"title": "Bassinet seats", "body": "Book bassinet rows immediately if not done (AY0042, CX138, CX161). Bassinets suit infants up to ~10kg. Request on airline websites or call."}, {"title": "Feeding on descent", "body": "Breastfeed or give pacifier/bottle during takeoff & landing to equalise ear pressure – prevents pain & crying"}, {"title": "Cabin bag essentials", "body": "2 changes of clothes for Theodore + 1 for you. Nappies for ~2x flight hours. Muslin cloths x3. Favourite toy. White noise app downloaded offline."}, {"title": "Time zones", "body": "Europe is ~7hrs behind Seoul/Sydney – adjust sleep schedule 2-3 days before departure. Expose Theodore to daylight on arrival days."}]}, {"section": "🍼 Feeding & Food", "items": [{"title": "Baby food", "body": "Pack pouches for flights & first day in each city. Most European supermarkets (ICA in Sweden, S-Market Finland, Netto Denmark) stock good organic baby food."}, {"title": "High chairs", "body": "5-star hotels will have these – always request when booking restaurants. Mention infant when reserving."}, {"title": "Breastfeeding", "body": "All recommended venues are breastfeeding-friendly. Nordic countries are especially supportive."}]}, {"section": "🚼 On the Ground", "items": [{"title": "Pram vs carrier", "body": "Use carrier (Ergobaby etc.) for cobblestone streets: Gamla Stan Stockholm, Bukchon Seoul, Covent Garden London. Use pram for parks & museums."}, {"title": "Baby changing", "body": "All 5-star hotels & major attractions (Vasa Museum, NHM London, Seoul Palace) have baby changing. Café Regatta Helsinki is famously baby-friendly."}, {"title": "Weather (Sep)", "body": "London ~17°C, Copenhagen ~16°C, Stockholm ~15°C, Helsinki ~14°C, Seoul ~22°C. Pack light layers for Scandinavia; Seoul warm. Sun hat for Seoul."}]}, {"section": "📋 Admin Checklist", "items": [{"title": "EHIC / Travel insurance", "body": "Ensure Theodore has travel insurance covering medical internationally. European Health Insurance Card valid for EU countries."}, {"title": "Passport", "body": "Confirm Theodore's passport is valid for full trip duration + 6 months after return."}, {"title": "Cots", "body": "Follow up with Athenaeum London, Nobis Stockholm, St George Helsinki & Le Méridien Seoul to reconfirm cot availability 2 weeks before each stay."}, {"title": "SAS tickets", "body": "Theodore has his own SAS ticket (XKV3SF) for LHR→CPH. Confirm Jonathan & Priscilla are on the same SK502 flight and on SK1422 CPH→ARN."}, {"title": "ESS", "body": "Need to apply for ESS prior to entry for all"}]}]}
+</script>
+
+<script>
+(function(){
+  function syncHeaderHeight(){
+    var h = document.getElementById('topHeader');
+    if(h) document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+  }
+  syncHeaderHeight();
+  window.addEventListener('resize', syncHeaderHeight);
+  window.addEventListener('orientationchange', syncHeaderHeight);
+
+  var data = JSON.parse(document.getElementById('trip-data').textContent);
+
+  var FLAGS = {
+    "OUTBOUND": "✈",
+    "LONDON": "🇬🇧",
+    "LONDON → COPENHAGEN": "🇩🇰",
+    "STOCKHOLM": "🇸🇪",
+    "STOCKHOLM → HELSINKI": "🇫🇮",
+    "SEOUL": "🇰🇷"
+  };
+
+  function flagFor(section){
+    if(!section) return "✦";
+    if(section.indexOf("OUTBOUND")===0) return "✈";
+    if(section.indexOf("LONDON")===0 && section.indexOf("COPENHAGEN")===-1) return "🇬🇧";
+    if(section.indexOf("COPENHAGEN")>-1) return "🇩🇰";
+    if(section.indexOf("STOCKHOLM")===0) return "🇸🇪";
+    if(section.indexOf("HELSINKI")>-1) return "🇫🇮";
+    if(section.indexOf("SEOUL")>-1) return "🇰🇷";
+    return "✦";
+  }
+
+  function shortLeg(section){
+    if(!section) return "";
+    if(section.indexOf("OUTBOUND")===0) return "Outbound";
+    if(section.indexOf("LONDON")===0 && section.indexOf("COPENHAGEN")===-1) return "London";
+    if(section.indexOf("COPENHAGEN")>-1) return "Copenhagen";
+    if(section.indexOf("STOCKHOLM")===0) return "Stockholm";
+    if(section.indexOf("HELSINKI")>-1) return "Helsinki";
+    if(section.indexOf("SEOUL")>-1) return "Seoul";
+    return section;
+  }
+
+  function esc(s){
+    if(s===undefined || s===null) return "";
+    return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  function itemsHtml(items){
+    if(!items || !items.length) return "";
+    return "<ul class='plan'>" + items.map(function(it){
+      var rating = it.rating ? "<span class='rating'>★ "+esc(it.rating)+"</span>" : "";
+      var free = it.free ? "<span class='free-tag'>Free</span>" : "";
+      return "<li>"+esc(it.text)+rating+free+"</li>";
+    }).join("") + "</ul>";
+  }
+
+  function mealsBlock(lp, lo, dp, dopt){
+    var html = "<div class='meals'>";
+    if(lp && lp.length){
+      html += "<div class='meal'><div class='block-label'>Lunch</div>" + itemsHtml(lp) + "</div>";
+    }
+    if(dp && dp.length){
+      html += "<div class='meal'><div class='block-label'>Dinner</div>" + itemsHtml(dp) + "</div>";
+    }
+    html += "</div>";
+    return html;
+  }
+
+  function altMealsBlock(lo, dopt){
+    var html = "";
+    if((lo && lo.length) || (dopt && dopt.length)){
+      html += "<div class='meals'>";
+      if(lo && lo.length) html += "<div class='meal'><div class='block-label'>Lunch, also</div>"+itemsHtml(lo)+"</div>";
+      if(dopt && dopt.length) html += "<div class='meal'><div class='block-label'>Dinner, also</div>"+itemsHtml(dopt)+"</div>";
+      html += "</div>";
+    }
+    return html;
+  }
+
+  function dayCard(d){
+    var num = String(d.day).padStart(2,'0');
+    var flightHtml = "";
+    if(d.flight){
+      flightHtml = "<div class='flight-strip'><span class='lbl'>In transit</span>"+esc(d.flight)+"</div>";
+    }
+
+    var actHtml = "";
+    if(d.activitiesPrimary && d.activitiesPrimary.length){
+      actHtml = "<div class='block'><div class='block-label'>Today</div>"+itemsHtml(d.activitiesPrimary)+"</div>";
+    }
+
+    var mealsHtml = mealsBlock(d.lunchPrimary, d.lunchOptional, d.dinnerPrimary, d.dinnerOptional);
+
+    var hasAlt = (d.activitiesOptional && d.activitiesOptional.length) ||
+                 (d.lunchOptional && d.lunchOptional.length) ||
+                 (d.dinnerOptional && d.dinnerOptional.length);
+
+    var altHtml = "";
+    if(hasAlt){
+      altHtml = "<details class='alt'><summary>Also considered</summary><div class='alt-body'>";
+      if(d.activitiesOptional && d.activitiesOptional.length){
+        altHtml += itemsHtml(d.activitiesOptional);
+      }
+      altHtml += altMealsBlock(d.lunchOptional, d.dinnerOptional);
+      altHtml += "</div></details>";
+    }
+
+    var notesHtml = "";
+    if(d.notes){
+      notesHtml = "<details class='notes'><summary>Notes</summary></details>";
+    }
+
+    var foot = "<div class='day-foot'>" +
+        "<div class='stay-pill'><span class='dot'></span><span class='name'>"+esc(d.accommodation||"")+"</span></div>" +
+        notesHtml +
+      "</div>";
+
+    var notesBody = d.notes ? "<div class='notes-body' style='display:none' data-notesbody>"+esc(d.notes)+"</div>" : "";
+
+    return "<article class='day'>" +
+      "<div class='day-head'><div class='day-num'>"+num+"</div>" +
+        "<div class='day-head-text'><div class='day-date'>"+esc(d.date)+"</div>" +
+        "<div class='day-dest'>"+esc(d.destination)+"</div></div></div>" +
+      flightHtml +
+      actHtml +
+      mealsHtml +
+      altHtml +
+      foot +
+      notesBody +
+      "</article>";
+  }
+
+  // City hero images (Wikimedia Commons, free-licensed)
+  var HERO_IMG = {
+    "Outbound": "https://commons.wikimedia.org/wiki/Special:FilePath/Sydney_Opera_House_and_Harbour_Bridge_Dusk_(3)_2019-06-21.jpg?width=1600",
+    "London": "https://commons.wikimedia.org/wiki/Special:FilePath/London_Skyline_2021.jpg?width=1600",
+    "Copenhagen": "https://commons.wikimedia.org/wiki/Special:FilePath/Colorful_Nyhavn_(28544891796).jpg?width=1600",
+    "Stockholm": "https://commons.wikimedia.org/wiki/Special:FilePath/Stortorget_i_Gamla_Stan_i_Stockholm.JPG?width=1600",
+    "Helsinki": "https://commons.wikimedia.org/wiki/Special:FilePath/Senate_Square_and_Lutheran_Cathedral_in_Helsinki.jpg?width=1600",
+    "Seoul": "https://commons.wikimedia.org/wiki/Special:FilePath/View_from_N_Seoul_Tower_a1.jpg?width=1600"
+  };
+  var HERO_EYEBROW = {
+    "Outbound": "In transit",
+    "London": "Now in",
+    "Copenhagen": "Now in",
+    "Stockholm": "Now in",
+    "Helsinki": "Now in",
+    "Seoul": "Now in"
+  };
+
+  // Build itinerary screen with section dividers
+  var itinDays = document.getElementById('itinDays');
+  var html = "";
+  var lastSection = null;
+  var legAnchors = [];
+  data.days.forEach(function(d){
+    if(d.section !== lastSection){
+      var id = "leg-" + shortLeg(d.section).toLowerCase().replace(/[^a-z0-9]+/g,'-');
+      legAnchors.push({id:id, label: shortLeg(d.section)});
+      var subMatch = d.section.match(/\(([^)]+)\)/);
+      var sub = subMatch ? subMatch[1] : d.section;
+      html += "<div class='section-divider' id='"+id+"'>" +
+        "<span class='flag'>"+flagFor(d.section)+"</span>" +
+        "<h2>"+esc(shortLeg(d.section))+"</h2>" +
+        "<div class='sub'>"+esc(sub)+"</div>" +
+        "<div class='rule'></div></div>";
+      lastSection = d.section;
+    }
+    html += dayCard(d);
+  });
+  itinDays.innerHTML = html;
+
+  // wire notes toggle: show/hide the sibling notes-body block
+  itinDays.addEventListener('toggle', function(e){
+    if(e.target.matches && e.target.matches('details.notes')){
+      var body = e.target.closest('.day').querySelector('[data-notesbody]');
+      if(body) body.style.display = e.target.open ? 'block' : 'none';
+    }
+  }, true);
+
+  // leg nav
+  var legNav = document.getElementById('legNav');
+  legNav.innerHTML = legAnchors.map(function(a,i){
+    return "<a href='#"+a.id+"' data-target='"+a.id+"'"+(i===0?" class='active'":"")+">"+esc(a.label)+"</a>";
+  }).join("");
+
+  var itinSticky = document.getElementById('itinSticky');
+  legNav.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(!a) return;
+    e.preventDefault();
+    Array.prototype.forEach.call(legNav.querySelectorAll('a'), function(el){ el.classList.remove('active'); });
+    a.classList.add('active');
+    var target = document.getElementById(a.dataset.target);
+    if(target){
+      var headerH = document.getElementById('topHeader').offsetHeight;
+      var y = target.getBoundingClientRect().top + window.scrollY - headerH - itinSticky.offsetHeight - 4;
+      window.scrollTo({top:y, behavior:'smooth'});
+    }
+  });
+
+  // city hero crossfade
+  var heroA = document.getElementById('heroImgA');
+  var heroB = document.getElementById('heroImgB');
+  var heroCity = document.getElementById('heroCity');
+  var heroEyebrow = document.getElementById('heroEyebrow');
+  var heroUsingA = true;
+  var heroLoaded = {};
+  function setHero(label){
+    var url = HERO_IMG[label];
+    if(!url) return;
+    var showEl = heroUsingA ? heroB : heroA;
+    var hideEl = heroUsingA ? heroA : heroB;
+    showEl.onload = function(){ showEl.classList.add('on'); };
+    showEl.onerror = function(){ showEl.classList.remove('on'); };
+    showEl.classList.remove('on');
+    showEl.src = url;
+    hideEl.classList.remove('on');
+    heroUsingA = !heroUsingA;
+    heroCity.textContent = label;
+    heroEyebrow.textContent = HERO_EYEBROW[label] || "Now in";
+  }
+  if(legAnchors.length){ setHero(legAnchors[0].label); }
+
+  // highlight active leg on scroll + update hero
+  var sectionEls = legAnchors.map(function(a){ return document.getElementById(a.id); });
+  var lastHeroIdx = 0;
+  window.addEventListener('scroll', function(){
+    var headerH2 = document.getElementById('topHeader').offsetHeight;
+    var pos = window.scrollY + headerH2 + itinSticky.offsetHeight + 30;
+    var activeIdx = 0;
+    sectionEls.forEach(function(el, i){
+      if(el && el.offsetTop <= pos) activeIdx = i;
+    });
+    Array.prototype.forEach.call(legNav.querySelectorAll('a'), function(el, i){
+      el.classList.toggle('active', i===activeIdx);
+    });
+    if(activeIdx !== lastHeroIdx){
+      lastHeroIdx = activeIdx;
+      setHero(legAnchors[activeIdx].label);
+    }
+  }, {passive:true});
+
+  // Flights screen
+  var fl = document.getElementById('flightsList');
+  fl.innerHTML = data.flights.map(function(f){
+    return "<div class='flight-card'>" +
+      "<div class='fc-top'><span class='fc-route'>"+esc(f.from)+" → "+esc(f.to)+"</span>" +
+      "<span class='fc-num'>"+esc(f.flight)+"</span></div>" +
+      "<div class='fc-meta'>" +
+        "<span><b>"+esc(f.date)+"</b></span>" +
+        "<span>"+esc(f.depart)+" → "+esc(f.arrive)+"</span>" +
+        "<span>"+esc(f.airline)+"</span>" +
+        "<span>"+esc(f.cls)+"</span>" +
+        "<span>Ref "+esc(f.ref)+"</span>" +
+      "</div>" +
+      (f.notes ? "<div class='fc-notes'>"+esc(f.notes)+"</div>" : "") +
+      (f.bagAdult ? "<div class='fc-bags'>" +
+        "<div class='fc-bag-row'><span class='who'>Adults</span><span class='what'>"+esc(f.bagAdult)+"</span></div>" +
+        "<div class='fc-bag-row'><span class='who'>Theodore</span><span class='what'>"+esc(f.bagInfant||"")+"</span></div>" +
+        "</div>" : "") +
+      "</div>";
+  }).join("");
+
+  // Stays screen
+  var st = document.getElementById('staysList');
+  st.innerHTML = data.stays.map(function(s){
+    return "<div class='stay-card'>" +
+      "<h3>"+esc(s.hotel)+"</h3>" +
+      "<div class='stay-city'>"+esc(s.city)+"</div>" +
+      "<div class='stay-dates'>" +
+        "<div><div class='k'>Check-in</div><div class='v'>"+esc(s.checkin)+"</div></div>" +
+        "<div><div class='k'>Check-out</div><div class='v'>"+esc(s.checkout)+"</div></div>" +
+      "</div>" +
+      "<div class='stay-cot'>"+esc((s.cot||"").replace(/[✅⚠️]/g,'').trim())+"</div>" +
+      "<div class='stay-notes'>"+esc(s.notes)+"</div>" +
+      "</div>";
+  }).join("");
+
+  // Tips screen
+  var tp = document.getElementById('tipsList');
+  tp.innerHTML = data.tips.map(function(sec){
+    return "<div class='tip-section'>" +
+      "<h3>"+esc((sec.section||"").replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu,'').trim())+"</h3>" +
+      sec.items.map(function(it){
+        return "<div class='tip-item'><div class='t'>"+esc(it.title)+"</div><div class='b'>"+esc(it.body)+"</div></div>";
+      }).join("") +
+      "</div>";
+  }).join("");
+
+  // Bottom nav screen switching
+  var bottomNav = document.getElementById('bottomNav');
+  bottomNav.addEventListener('click', function(e){
+    var btn = e.target.closest('button');
+    if(!btn) return;
+    var name = btn.dataset.screen;
+    Array.prototype.forEach.call(bottomNav.querySelectorAll('button'), function(b){
+      b.classList.toggle('active', b===btn);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.screen'), function(s){
+      s.classList.toggle('active', s.id === 'screen-'+name);
+    });
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  });
+
+})();
+</script>
+</body>
+</html>
